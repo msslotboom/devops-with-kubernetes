@@ -6,3 +6,5 @@ edition = "2021"
 [dependencies]
 chrono = "0.4.38"
 rand = "0.8.5"
+rocket = "0.5.1"
+tokio = "1.40.0"
