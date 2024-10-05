@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-app
+  template:
+    metadata:
+      labels:
+        app: log-app
+    spec:
+      volumes: # Define volume
+        - name: shared-log
+          emptyDir: {}
+      containers:
+        - name: log-generator
+          image: mikael13/log-generator:0.02
+          volumeMounts:
+          - name: shared-log
+            mountPath: /usr/src/app/files
+        - name: log-output
+          image: mikael13/log-output:313
+          volumeMounts:
+          - name: shared-log
+            mountPath: /usr/src/app/files 
+
