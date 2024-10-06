@@ -14,7 +14,8 @@ spec:
     spec:
       volumes: # Define volume
         - name: shared-log
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: storage-claim
       containers:
         - name: log-generator
           image: mikael13/log-generator:0.02
@@ -22,7 +23,7 @@ spec:
           - name: shared-log
             mountPath: /usr/src/app/files
         - name: log-output
-          image: mikael13/log-output:313
+          image: mikael13/log-output:317
           volumeMounts:
           - name: shared-log
             mountPath: /usr/src/app/files 
