@@ -12,6 +12,10 @@ spec:
       labels:
         app: todo-app
     spec:
+      volumes:
+        - name: shared-log
+          persistentVolumeClaim:
+            claimName: storage-claim
       containers:
         - name: todo-app
-          image: mikael13/todo-app:0.31
+          image: mikael13/todo-app:0.37

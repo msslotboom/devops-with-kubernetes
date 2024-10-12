@@ -1,18 +1,57 @@
 const port = process.env.PORT
+const fs = require('fs')
 const express = require('express')
 const app = express()
+const axios = require('axios')
 
-const printPort = () => {
-	console.log(`Server started on port ${port}`)
-	setTimeout(printPort, 5000)
-}
+const imageUrl = 'https://picsum.photos/1200'
+const imagePath = 'image.png'
 
+let lastImagePullTime = null
+fs.readFile('/usr/src/app/files/lastpull.txt', 'utf8', (err, data) => {
+	if (err) {
+		console.log(err);
+		writeFile('0', "lastpull.txt");
+		return;
+	}
+	pong = parseInt(data);
+});
+
+app.use(express.static(__dirname));
 app.listen(port, () => {
 	console.log(`Server started on port ${port}`)
-  })
-
-app.get('/', (request, response) => {
-response.send('<h1>Hello World!</h1>')
 })
 
-printPort()
+app.get('/', (request, response) => {
+	download_image(imageUrl, imagePath)
+	response.send(`<h1>Hello World!</h1> <img src="${imagePath}" alt="random image"/>`)
+
+})
+
+const download_image = (url, image_path) => {
+	const currentTime = new Date()
+
+	if (!lastImagePullTime || (currentTime - lastImagePullTime) >= 60 * 60 * 1000) {
+		lastImagePullTime = currentTime;
+		return axios({
+			url,
+			responseType: 'stream',
+		}).then(
+			response => new Promise((resolve, reject) => {
+				response.data
+					.pipe(fs.createWriteStream(image_path))
+					.on('finish', () => {
+						writeFile(currentTime.toString(), "lastpull.txt");
+						return resolve()
+					})
+					.on('error', e => reject(e));
+			}))
+	}
+}
+const writeFile = (text, dest) => {
+	fs.writeFile(`/usr/src/app/files/${dest}`, text, err => {
+		if (err) {
+			console.log(err)
+		}
+	})
+}
