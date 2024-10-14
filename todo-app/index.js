@@ -24,7 +24,21 @@ app.listen(port, () => {
 
 app.get('/', (request, response) => {
 	download_image(imageUrl, imagePath)
-	response.send(`<h1>Hello World!</h1> <img src="${imagePath}" alt="random image"/>`)
+	response.send(`
+		<h1>Todo-app</h1> 
+		<img src="${imagePath}" width="600" height="300" alt="random image"/>
+		<br/>
+		<br/>
+		<form>
+			<input type="text" maxlength="140">
+			<input type="submit" value="create TODO">
+		<form/>
+
+		<ul>
+			<li>TODO 1</li>
+			<li>TODO 2</li>
+		<ul/>
+	`)
 
 })
 

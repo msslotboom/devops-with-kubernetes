@@ -18,4 +18,4 @@ spec:
             claimName: storage-claim
       containers:
         - name: todo-app
-          image: mikael13/todo-app:0.37
+          image: mikael13/todo-app:0.38
