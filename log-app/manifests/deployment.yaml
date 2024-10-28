@@ -16,5 +16,5 @@ spec:
         # - name: log-generator
         #   image: mikael13/log-generator:0.02
         - name: log-output
-          image: mikael13/log-output:319
+          image: mikael13/log-output:322
 
