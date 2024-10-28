@@ -12,19 +12,9 @@ spec:
       labels:
         app: log-app
     spec:
-      volumes: # Define volume
-        - name: shared-log
-          persistentVolumeClaim:
-            claimName: storage-claim
       containers:
-        - name: log-generator
-          image: mikael13/log-generator:0.02
-          volumeMounts:
-          - name: shared-log
-            mountPath: /usr/src/app/files
+        # - name: log-generator
+        #   image: mikael13/log-generator:0.02
         - name: log-output
-          image: mikael13/log-output:317
-          volumeMounts:
-          - name: shared-log
-            mountPath: /usr/src/app/files 
+          image: mikael13/log-output:319
 

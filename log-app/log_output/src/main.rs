@@ -4,7 +4,7 @@ use rocket::{get, routes};
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
     let _ = rocket::build()
-        .mount("/", routes![read_log])
+        .mount("/log", routes![read_log])
         .launch()
         .await?;
     Ok(())
